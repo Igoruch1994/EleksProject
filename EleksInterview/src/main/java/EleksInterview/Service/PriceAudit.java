@@ -19,8 +19,8 @@ public class PriceAudit {
     BigDecimal price=new BigDecimal("00.00");
     public Check check;
     public Calendar calendar=Calendar.getInstance();
-    private List<Pizza> orderPizza=new ArrayList<Pizza>();
-    private List<Drink> orderDrink=new ArrayList<Drink>();
+    private List<Pizza> orderPizza;
+    private List<Drink> orderDrink;
     private StringBuffer message=new StringBuffer();
     public User user;
     int dow;
@@ -93,7 +93,7 @@ public class PriceAudit {
         }
         else {
             if (user.getDiscount_code() == true) {
-                price = price.multiply(new BigDecimal("0.8"));
+                price = price.multiply(new BigDecimal("0.9"));
                 message.append("You have discount cod, so your discount is 10%. And it is :" + price.multiply(new BigDecimal("0.2")).setScale(2, BigDecimal.ROUND_HALF_UP) + " grn.\n");
             }
         }

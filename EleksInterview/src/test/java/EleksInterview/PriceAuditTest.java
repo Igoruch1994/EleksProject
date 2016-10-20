@@ -90,7 +90,7 @@ public class PriceAuditTest {
         priceAudit.setUser(user);
         priceAudit.countPrice();
         priceAudit.verifyDiscount();
-        Assert.assertEquals(priceAudit.getPrice().setScale(2,BigDecimal.ROUND_HALF_UP),new BigDecimal("50.40"));
+        Assert.assertEquals(priceAudit.getPrice().setScale(2,BigDecimal.ROUND_HALF_UP),new BigDecimal("56.70"));
     }
 
     @Test
@@ -148,7 +148,7 @@ public class PriceAuditTest {
         priceAudit.makeCheckBy(orderPizza,orderDrink);
         priceAudit.countPrice();
         priceAudit.verifyDiscount();
-        Assert.assertEquals(priceAudit.getPrice().setScale(2,BigDecimal.ROUND_HALF_UP),new BigDecimal("48.00"));
+        Assert.assertEquals(priceAudit.getPrice().setScale(2,BigDecimal.ROUND_HALF_UP),new BigDecimal("54.00"));
     }
 
     @Test

@@ -2,6 +2,7 @@ package EleksInterview;
 
 import EleksInterview.Entity.Drinks.Drink;
 import EleksInterview.Entity.Ingredients.Ingredient;
+import EleksInterview.Entity.Ingredients.Tomatoes;
 import EleksInterview.Entity.Pizza.Pizza;
 import EleksInterview.Entity.User;
 import EleksInterview.Service.Menu;
@@ -32,6 +33,8 @@ public class App
         pizza.AddIngridient(menu.getIngredientsList().get(0));
         pizza.AddIngridient(menu.getIngredientsList().get(1));
         pizza.AddIngridient(menu.getIngredientsList().get(2));
+        pizza.AddIngridient(menu.getIngredientsList().get(3));
+
         Pizza pizza1=menu.getPizzasList().get(1);
         Drink drink=menu.getDrinksList().get(3);
         list.add(pizza);
@@ -39,7 +42,5 @@ public class App
         list1.add(drink);
         order.MakeAnOrder(list,list1);
         order.PrintCheck();
-        //menu.getPizzasList().get(2).AddIngridient(menu.getIngredientsList().get(3));
-        //System.out.println((bigDecimal.add(bigDecimal1).multiply(new BigDecimal("0.95"))).setScale(2, BigDecimal.ROUND_HALF_UP));
     }
 }

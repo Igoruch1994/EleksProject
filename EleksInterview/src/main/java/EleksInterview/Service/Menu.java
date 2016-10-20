@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class Menu implements MenuFactory {
 
-    public List<Ingredient> ingredientsList=new ArrayList<Ingredient>();
-    public List<Drink> drinksList=new ArrayList<Drink>();
-    public List<Pizza> pizzasList=new ArrayList<Pizza>();
+    private List<Ingredient> ingredientsList=new ArrayList<Ingredient>();
+    private List<Drink> drinksList=new ArrayList<Drink>();
+    private List<Pizza> pizzasList=new ArrayList<Pizza>();
 
     public Menu() {
         createPizzas();

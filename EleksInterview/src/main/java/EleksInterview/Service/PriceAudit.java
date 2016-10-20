@@ -17,12 +17,12 @@ import java.util.List;
  */
 public class PriceAudit {
     BigDecimal price=new BigDecimal("00.00");
-    Check check;
+    public Check check;
     public Calendar calendar=Calendar.getInstance();
     private List<Pizza> orderPizza=new ArrayList<Pizza>();
     private List<Drink> orderDrink=new ArrayList<Drink>();
     private StringBuffer message=new StringBuffer();
-    User user;
+    public User user;
     int dow;
     int weekOfMonth;
     int month;
@@ -57,28 +57,23 @@ public class PriceAudit {
             price=price.add(drink.getPrice());
         }
     }
-
     public void checkDiscounts(){
         mondayDiscount();
         verifyDiscount();
         getTipping();
         check.setScore(price);
         check.setMessage(message);
-
     }
-
     public void mondayDiscount(){
         if (dow==2&&orderDrink!=null){
             for (Drink drink:orderDrink){
                 if (drink instanceof Coffee){
                     price=price.subtract(drink.getPrice());
                     message.append("Today is mondey, so you have free coffe!\n");
-
                 }
             }
         }
     }
-
     public void verifyDiscount(){
         if (dow==6||dow==7||dow==1){
             price=price.add(price.multiply(new BigDecimal(0.05)));

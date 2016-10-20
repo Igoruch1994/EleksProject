@@ -7,11 +7,8 @@ import EleksInterview.Entity.Ingredients.Ingredient;
 import EleksInterview.Entity.Pizza.Pizza;
 import EleksInterview.Entity.User;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -30,6 +27,7 @@ public class PriceAudit {
     int weekOfMonth;
     int month;
     int doy;
+    int dom;
 
     public void makeCheckBy(List<Pizza> orderPizza, List<Drink> orderDrink){
         this.orderPizza = orderPizza;
@@ -41,6 +39,7 @@ public class PriceAudit {
          weekOfMonth=calendar.get(Calendar.WEEK_OF_MONTH);
          month=calendar.get(Calendar.MONTH);
          doy=calendar.get(Calendar.DAY_OF_YEAR);
+        dom=calendar.get(Calendar.DAY_OF_MONTH);
 
         if (orderPizza!=null) {
             for (int i = 1; i <= orderPizza.size(); i++) {
@@ -57,15 +56,11 @@ public class PriceAudit {
         for (Drink drink:orderDrink){
             price=price.add(drink.getPrice());
         }
-        System.out.println(price+" grn");
-
     }
 
     public void checkDiscounts(){
-
-
         mondayDiscount();
-        fridaySaturdayAndSundayDiscount();
+        verifyDiscount();
         getTipping();
         check.setScore(price);
         check.setMessage(message);
@@ -77,7 +72,6 @@ public class PriceAudit {
             for (Drink drink:orderDrink){
                 if (drink instanceof Coffee){
                     price=price.subtract(drink.getPrice());
-                    System.out.println("new price "+price.setScale(2, BigDecimal.ROUND_HALF_UP));
                     message.append("Today is mondey, so you have free coffe!\n");
 
                 }
@@ -85,16 +79,16 @@ public class PriceAudit {
         }
     }
 
-    public void fridaySaturdayAndSundayDiscount(){
+    public void verifyDiscount(){
         if (dow==6||dow==7||dow==1){
             price=price.add(price.multiply(new BigDecimal(0.05)));
             message.append("Every Friday,Saturday and Sunday our price grow up by 5%!\n");
         }
-        if(month==7&&dow==24){
+        if(month==7&&dom==24){
             message.append("Today is 24 August! Just today 50% discount!\n");
             price=price.multiply(new BigDecimal("0.5"));
         }
-        else if(month==0&&dow==7){
+        else if(month==0&&doy==7){
             message.append("Merry Christmas!!! Just today 50% discount!\n");
             price=price.multiply(new BigDecimal("0.5"));
         }
@@ -103,13 +97,15 @@ public class PriceAudit {
             price=price.multiply(new BigDecimal("0.5"));
         }
         else {
-            price=price.multiply(new BigDecimal("0.8"));
-            message.append("You have discount cod, so your discount is 10%. And it is :"+price.multiply(new BigDecimal("0.2")).setScale(2, BigDecimal.ROUND_HALF_UP)+" grn.\n");
+            if (user.getDiscount_code() == true) {
+                price = price.multiply(new BigDecimal("0.8"));
+                message.append("You have discount cod, so your discount is 10%. And it is :" + price.multiply(new BigDecimal("0.2")).setScale(2, BigDecimal.ROUND_HALF_UP) + " grn.\n");
+            }
         }
     }
 
     public void getTipping(){
-        if (month==8&&weekOfMonth==1){
+        if (month==8&&weekOfMonth==1&&dow==7){
             message.append("Today without tipping. It is first week of September!");
         }else {
             message.append("Thank you for the tip. Tip: "+ price.multiply(new BigDecimal("0.05")).setScale(2, BigDecimal.ROUND_HALF_UP)+" grn\n");

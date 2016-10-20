@@ -13,6 +13,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <bean id="menu" class="EleksInterview.Service.Menu"></bean>
         <bean id="priceAudit" class="EleksInterview.Service.PriceAudit">
             <property name="check" ref="check"/>
+            <property name="user" ref="user"/>
         </bean>
         <bean id="check" class="EleksInterview.Entity.Check"/>
 </beans>

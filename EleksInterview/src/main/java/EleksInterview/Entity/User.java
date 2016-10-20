@@ -14,4 +14,7 @@ public class User {
         return discount_code;
     }
 
+    public void setDiscount_code(boolean discount_code) {
+        this.discount_code = discount_code;
+    }
 }
